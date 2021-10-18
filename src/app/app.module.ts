@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,7 +12,6 @@ import { CreateContatoComponent } from './components/create-contato/create-conta
 import { LoginComponent } from './components/login/login.component';
 import { CadastrarComponent } from './components/cadastrar/cadastrar.component';
 import { HomeComponent } from './components/home/home.component';
-import { CreateContatosComponent } from './components/Home/create-contatos/create-contatos.component';
 import { SobreComponent } from './components/sobre/sobre.component';
 
 @NgModule({
@@ -24,13 +24,13 @@ import { SobreComponent } from './components/sobre/sobre.component';
     LoginComponent,
     CadastrarComponent,
     HomeComponent,
-    CreateContatosComponent,
     SobreComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

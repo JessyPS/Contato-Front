@@ -10,9 +10,8 @@ import { ContatoService } from 'src/app/services/contato.service';
 export class ListaDeContatosComponent implements OnInit {
 
   public contatos: Contato[];
-  private cs:ContatoService = new ContatoService();
 
-  constructor() {
+  constructor(private cs:ContatoService ) {
     this.contatos = this.cs.getContatos();
     ContatoService.onContatosMudaram.subscribe(
       (contatos) => {

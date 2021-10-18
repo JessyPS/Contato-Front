@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Contato } from '../models/Contato';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,15 @@ export class ContatoService {
 
   static onContatosMudaram:EventEmitter<Contato[]> = new EventEmitter();
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
   getContatos():Contato[] {
     
+    this.http.get("url", {
+      headers:{
+        authorization: "Bearer " + window.sessionStorage.getItem('token')
+      }
+    })
+
     // *Tentar* carregar os dados da localStorage
     let dados = window.localStorage.getItem(this.chave);
 
@@ -28,10 +35,7 @@ export class ContatoService {
       // Se não houver dados => {Guardo uma array vazia no localstorage; Retorna o array vazia; }
       window.localStorage.setItem(this.chave, "[]");
       return [];
-
     }
-    
-
   }
 
   addContato(c:Contato): void {
@@ -47,7 +51,5 @@ export class ContatoService {
 
     // Emitindo evento "contatos mudaram"
     ContatoService.onContatosMudaram.emit(contatos);
-
   }
-
 }
