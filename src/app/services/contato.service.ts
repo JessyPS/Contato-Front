@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Contato } from '../models/Contato';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,48 +9,28 @@ import { HttpClient } from '@angular/common/http';
 export class ContatoService {
 
   private readonly chave:string = "CONTATOS";
+  private readonly url = "http://contatos-nodb.herokuapp.com";
 
   static onContatosMudaram:EventEmitter<Contato[]> = new EventEmitter();
 
   constructor(private http: HttpClient) { }
-  getContatos():Contato[] {
-    
-    this.http.get("url", {
-      headers:{
-        authorization: "Bearer " + window.sessionStorage.getItem('token')
-      }
-    })
-
-    // *Tentar* carregar os dados da localStorage
-    let dados = window.localStorage.getItem(this.chave);
-
-    // Verificar se havia dados na localStorage
-    if(dados){
-
-      // Se houver dados => {Transformar dados em array; Retornar os array de contatos}
-      let contatosCarregados:Contato[] = JSON.parse(dados);
-      return contatosCarregados;
-
-    } else {
-      
-      // Se não houver dados => {Guardo uma array vazia no localstorage; Retorna o array vazia; }
-      window.localStorage.setItem(this.chave, "[]");
-      return [];
-    }
+  getContatos():Observable<Contato[]> {
+    let token = window.sessionStorage.getItem('token');
+    return this.http.get<Contato[]>(this.url+'/contatos', {headers:{Authorization:'Bearer ${token}'}});
   }
 
   addContato(c:Contato): void {
     
-    // Levantar os contatos do localStorage para um array de contatos
-    let contatos = this.getContatos();
+    // // Levantar os contatos do localStorage para um array de contatos
+    // let contatos = this.getContatos();
     
-    // Adicionar o contato c ao final do array
-    contatos.push(c);
+    // // Adicionar o contato c ao final do array
+    // contatos.push(c);
 
-    // Salvar o array de volta no localStorage
-    window.localStorage.setItem(this.chave,JSON.stringify(contatos));
+    // // Salvar o array de volta no localStorage
+    // window.localStorage.setItem(this.chave,JSON.stringify(contatos));
 
-    // Emitindo evento "contatos mudaram"
-    ContatoService.onContatosMudaram.emit(contatos);
+    // // Emitindo evento "contatos mudaram"
+    // ContatoService.onContatosMudaram.emit(contatos);
   }
 }

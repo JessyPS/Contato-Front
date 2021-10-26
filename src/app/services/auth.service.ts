@@ -9,7 +9,7 @@ export class AuthService {
   constructor(private http:HttpClient) { }
 
   cadastrar (nome:string, email:string, senha:string){
-    console.log(nome, email, senha);
+    // console.log(nome, email, senha);
     let u = {nome, email, senha};
     return this.http.post(this.url + "/registrar", u)
   }

@@ -7,6 +7,7 @@ import { ContatoService } from 'src/app/services/contato.service';
   templateUrl: './create-contato.component.html',
   styleUrls: ['./create-contato.component.css']
 })
+
 export class CreateContatoComponent implements OnInit {
 
   @Output() onCancelarClick:EventEmitter<null> = new EventEmitter();
@@ -17,9 +18,7 @@ export class CreateContatoComponent implements OnInit {
     telefones:[""]
   }
 
-  cs:ContatoService = new ContatoService();
-
-  constructor() { }
+  constructor(private cs:ContatoService) {}
 
   cancelar(){
     console.log("Pediu para candelar");
@@ -49,11 +48,9 @@ export class CreateContatoComponent implements OnInit {
       email:"",
       telefones:[""]
     }
-
   }
 
   removeTelefone(pos:number):void{
     this.novoContato.telefones.splice(pos,1);
   }
-
 }

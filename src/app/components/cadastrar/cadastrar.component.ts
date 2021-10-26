@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
-
 interface response {
   msg: string,
   token: string
@@ -40,9 +39,10 @@ export class CadastrarComponent implements OnInit {
           this.router.navigateByUrl("/home");
           console.log(data)
         },
+
         error: err => console.log(err),
         complete: () => console.log("O observável já não tem mais o que observar")
-      }
+      }      
     );
   }
 }
